@@ -1,0 +1,22 @@
+# Coldline - Task 3.5
+# File: submission.yaml
+# Component: Student answer sheet
+# Purpose: Record that this Task has no direct answer to record.
+# Interacts With: Submission schema and public verifier
+# Sprint/Task: Sprint 3 - Project 3 / Task 3.5
+# Concepts: Deterministic assessment, implementation as evidence
+# Tools: YAML
+
+# Keep answers: {} in submission.yaml; the sample shows the same empty mapping.
+# Complete the configuration described in the Task contract.
+# Do not include secrets, personal data, or local absolute paths.
+
+# Task 3.5 — Wire one deterministic CI reliability gate
+# Replace the reliability-gate job's placeholder step in
+# .github/workflows/task.yml with exactly one real command: `poe queue-contract`
+# or `poe slo-contract`. Then run `poe gate-contract` to prove it actually
+# depends on the setting it is supposed to protect.
+# Source: docs/student/task-3-5-contract.md.
+# Your wired CI job and the running checks provide the evidence for this Task.
+# Keep this mapping empty; this Task has no direct-answer fields to complete.
+answers: {}

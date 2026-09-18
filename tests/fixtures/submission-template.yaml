@@ -1,0 +1,13 @@
+# Coldline - Task 3.5
+# File: submission-template.yaml
+# Component: Public verifier fixture
+# Purpose: Exercise the shipped answer sheet inside the public test suite.
+# Interacts With: tests/contract/test_submission.py
+# Sprint/Task: Sprint 3 - Project 3 / Task 3.5
+# Concepts: Deterministic assessment, implementation as evidence
+# Tools: YAML
+
+# Task 3.5 — Wire one deterministic CI reliability gate
+# Source: docs/student/task-3-5-contract.md.
+# Keep this mapping empty; this Task has no direct-answer fields to complete.
+answers: {}

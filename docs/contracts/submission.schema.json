@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "Coldline Task 3.5 public answer contract. This Task has no useful direct answer: the deliverable is the wired CI job in .github/workflows/task.yml and its observed pass/fail behavior against the real reliability check, and the automated checks exercise the running application code and the deployed CI configuration rather than a recorded claim. The mapping is required and must be empty, so an invented status or self-reported test result is rejected rather than accepted as evidence.",
+  "title": "Coldline Task 3.5 answers",
+  "description": "An intentionally empty answer mapping.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["answers"],
+  "properties": {
+    "answers": {
+      "description": "Empty by design. Add no field: the wired CI job and its observed behavior are the evidence.",
+      "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 0
+    }
+  }
+}
