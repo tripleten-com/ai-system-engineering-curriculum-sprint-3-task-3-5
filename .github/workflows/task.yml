@@ -56,7 +56,8 @@ jobs:
   # Task 3.5 — Wire one deterministic CI gate for a real reliability behavior
   #
   # This job is YOUR assignment. It is legal YAML today, and it stays green, but it does
-  # not actually check anything: its final step is a placeholder. Replace that one step
+  # not actually check anything: its reliability-check step between startup and cleanup
+  # is a placeholder. Replace that one step
   # with a real command, and nothing else. See docs/student/task-3-5-contract.md.
   #
   # This is the first Task in this Sprint where .github/workflows/task.yml itself is

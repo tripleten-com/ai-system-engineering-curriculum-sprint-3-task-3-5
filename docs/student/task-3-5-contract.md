@@ -10,7 +10,8 @@ from Task 3.4.
 
 `.github/workflows/task.yml` already declares a second job, `reliability-gate`, alongside the
 supplied `verify` job. It checks out the repository, installs the pinned toolchain, and starts
-the stack — exactly like `verify` does — but its final step is a placeholder:
+the stack — exactly like `verify` does — but its reliability-check step between startup and
+cleanup is a placeholder:
 
 ```yaml
 - name: Run the reliability check (placeholder)
@@ -60,6 +61,11 @@ from earlier Tasks. Pick one. Do not run both, do not run `poe verify` wholesale
 a command that is real but unrelated to either setting — a command that would stay green even if
 the setting it is supposed to protect regressed is not a reliability gate, whatever else it
 checks.
+
+Nothing else in the file changes, with one exception: the `# PLACEHOLDER …` instruction comment
+above that step is yours to keep, replace with your own one-line rationale, or delete — the
+checks parse the workflow as YAML, which discards comments, so this one is invisible to them
+either way.
 
 ## Prove it before you submit
 
