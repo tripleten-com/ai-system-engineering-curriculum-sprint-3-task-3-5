@@ -3,8 +3,8 @@
 This checkpoint wires one deterministic CI gate to a real reliability behavior and proves it
 actually gates something. `.github/workflows/task.yml` already declares a `reliability-gate`
 job alongside the supplied `verify` job; it checks out, installs, and starts the stack exactly
-like `verify` does, but its final step is a placeholder that runs and always succeeds without
-checking anything. Replacing that one step with a real command, and proving — against your own
+like `verify` does, but its reliability-check step between startup and cleanup is a placeholder
+that runs and always succeeds without checking anything. Replacing that one step with a real command, and proving — against your own
 running stack — that it actually rejects a known regression, is this Task's work. This is the
 first Task in this Sprint where `.github/workflows/task.yml` itself is student-editable.
 
