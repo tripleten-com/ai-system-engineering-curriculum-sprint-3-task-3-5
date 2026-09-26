@@ -87,13 +87,10 @@ jobs:
           .tools/bin/uv sync --frozen
       - name: Start the pinned runtime
         run: .tools/bin/uv run --frozen poe start
-      # PLACEHOLDER — replace this one step with exactly one of:
-      #   .tools/bin/uv run --frozen poe queue-contract
-      #   .tools/bin/uv run --frozen poe slo-contract
-      # Nothing else belongs on this line: not `poe verify`, not both commands, not an
-      # unrelated command. See docs/student/task-3-5-contract.md.
-      - name: Run the reliability check (placeholder)
-        run: echo "reliability gate placeholder — replace this step"
+      # Gates the dead-letter redrive budget: a lost retry silently drops a shipment
+      # exception, while a slow alert only delays a dispatcher who still gets told.
+      - name: Run the dead-letter redrive reliability check
+        run: .tools/bin/uv run --frozen poe queue-contract
       - name: Stop the runtime
         if: always()
         run: .tools/bin/uv run --frozen poe reset
