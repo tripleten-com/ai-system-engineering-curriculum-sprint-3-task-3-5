@@ -6,6 +6,14 @@
 # Sprint/Task: Sprint 3 - Project 3 / Task 3.5
 # Concepts: Deterministic assessment, CI reliability gate
 # Tools: GitHub Actions
+#
+# Known-wrong variant "unrelated-check": the reliability-gate job's placeholder step is
+# replaced with `poe unit`, a real, deterministic, currently-passing command — a
+# plausible mistake since it genuinely stops the placeholder from being a no-op. But
+# `poe unit` runs no Docker Compose stack and reads neither the deployed queue's redrive
+# policy nor the deployed alert rule's window, so it stays green whether or not either
+# setting regresses to its own Task's known starting-broken value. This is the exact
+# defect tests/contract/test_reliability_gate.py's static and live checks both catch.
 
 name: Task 3.5 verification
 
@@ -18,22 +26,16 @@ permissions:
 
 jobs:
   verify:
-    # This is the STUDENT contract: on a fresh opening checkpoint it is supposed to fail, and a
-    # student makes it pass. Export PRs regenerate the whole template, so running it there only
-    # produced permanent red that masked real regressions. template-integrity.yml covers those
-    # branches instead.
     if: >-
       !startsWith(github.head_ref, 'export/')
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - name: Check out the repository
-        # actions/checkout v4.2.2
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 0
       - name: Set up Python 3.12
-        # actions/setup-python v6.0.0
         uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c
         with:
           python-version: "3.12"
@@ -53,16 +55,6 @@ jobs:
         if: always()
         run: .tools/bin/uv run --frozen poe reset
 
-  # Task 3.5 — Wire one deterministic CI gate for a real reliability behavior
-  #
-  # This job is YOUR assignment. It is legal YAML today, and it stays green, but it does
-  # not actually check anything: its reliability-check step between startup and cleanup
-  # is a placeholder. Replace that one step
-  # with a real command, and nothing else. See docs/student/task-3-5-contract.md.
-  #
-  # This is the first Task in this Sprint where .github/workflows/task.yml itself is
-  # student-editable. Keep the `verify` job above exactly as supplied; only this job's
-  # placeholder step is yours to change.
   reliability-gate:
     if: >-
       !startsWith(github.head_ref, 'export/')
@@ -70,12 +62,10 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Check out the repository
-        # actions/checkout v4.2.2
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 0
       - name: Set up Python 3.12
-        # actions/setup-python v6.0.0
         uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c
         with:
           python-version: "3.12"
@@ -87,10 +77,8 @@ jobs:
           .tools/bin/uv sync --frozen
       - name: Start the pinned runtime
         run: .tools/bin/uv run --frozen poe start
-      # Gate the dead-letter redrive budget: if it regresses, an interrupted shipment
-      # exception is dead-lettered on its first transient failure and never recovers.
-      - name: Run the dead-letter redrive reliability check
-        run: .tools/bin/uv run --frozen poe queue-contract
+      - name: Run the reliability check
+        run: .tools/bin/uv run --frozen poe unit
       - name: Stop the runtime
         if: always()
         run: .tools/bin/uv run --frozen poe reset
