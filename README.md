@@ -192,8 +192,10 @@ These paths are student-editable:
 - `.github/workflows/task.yml`
 - `submission.yaml`
 
-Keep the `verify` job, the `reliability-gate` job's checkout/toolchain/start/stop steps, Task
-3.3's own settled `compose.yaml`, Task 3.4's own settled `infra/observability/alerts.yml`, and
+Keep the `verify` job, the `reliability-gate` job's supplied steps (`Check out the
+repository`, `Set up Python 3.12`, `Install pinned tooling`, `Pull and build the pinned
+images` and `Start the pinned runtime` before the one step you replace, then `Show the runtime
+logs on failure` and `Stop the runtime` after it), Task 3.3's own settled `compose.yaml`, Task 3.4's own settled `infra/observability/alerts.yml`, and
 every test file exactly as supplied; the public checks compare them. Everything else in this
 repository is supplied.
 
