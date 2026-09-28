@@ -9,7 +9,8 @@ from Task 3.4.
 ## The one CI gate
 
 `.github/workflows/task.yml` already declares a second job, `reliability-gate`, alongside the
-supplied `verify` job. It checks out the repository, installs the pinned toolchain, and starts
+supplied `verify` job. It checks out the repository, installs the pinned toolchain, pulls the
+pinned images, and starts
 the stack — exactly like `verify` does — but its reliability-check step between startup and
 cleanup is a placeholder:
 
@@ -37,7 +38,7 @@ anything. Replace that one step with a real command — nothing else in the file
 | Supplied | Where | Note |
 |---|---|---|
 | The `verify` job | `.github/workflows/task.yml` | do not edit |
-| The `reliability-gate` job's checkout, toolchain, and start/stop steps | `.github/workflows/task.yml` | do not edit |
+| The `reliability-gate` job's checkout, toolchain, image pull, start, failure-log, and stop steps | `.github/workflows/task.yml` | do not edit |
 | Task 3.3's own settled dead-letter redrive policy | `compose.yaml` | unchanged; not this Task's editable surface |
 | Task 3.4's own settled alert window | `infra/observability/alerts.yml` | unchanged; not this Task's editable surface |
 | The automated checks this Task's own check exercises | `tests/contract/test_runtime_adapters.py`, `tests/contract/test_slo_alert.py` | run them through `poe queue-contract`/`poe slo-contract`; do not edit them |
@@ -102,7 +103,12 @@ poe verify          # the full public student verification path
 - `.github/workflows/task.yml`
 - `submission.yaml`
 
-Keep the `verify` job, the `reliability-gate` job's checkout/toolchain/start/stop steps, the
+Keep the `verify` job, the `reliability-gate` job's supplied steps (listed below), the
 deployed queue and alert settings from Tasks 3.3 and 3.4, and every test file exactly as
 supplied. The public checks compare them. Choosing and wiring the one real reliability check —
 and proving it actually gates something — is this Task's assignment.
+
+The `reliability-gate` job's supplied steps are, in order: `Check out the repository`,
+`Set up Python 3.12`, `Install pinned tooling`, `Pull and build the pinned images`, and
+`Start the pinned runtime`; then the one step you replace; then
+`Show the runtime logs on failure` and `Stop the runtime`.
